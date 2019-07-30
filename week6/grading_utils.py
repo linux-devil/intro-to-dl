@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 import numpy as np
 import random
+import tqdm_utils
 
 
 def test_vocab(vocab, PAD, UNK, START, END):
@@ -74,7 +75,8 @@ def test_validation_loss(decoder, s, generate_batch, val_img_embeds, val_caption
     np.random.seed(300)
     random.seed(300)
     val_loss = 0
-    for _ in range(1000):
+    batches_for_eval = 1000
+    for _ in tqdm_utils.tqdm_notebook_failsafe(range(batches_for_eval)):
         val_loss += s.run(decoder.loss, generate_batch(val_img_embeds,
                                                        val_captions_indexed,
                                                        32,
